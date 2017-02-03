@@ -1,3 +1,10 @@
+spring:
+  application:
+    name: address-server
+  cloud:
+    config:
+      discovery:
+        enabled: true
 eureka:
   instance:
     hostname: localhost

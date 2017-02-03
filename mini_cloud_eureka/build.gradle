@@ -6,13 +6,6 @@ jar {
 	version = '0.0.1-SNAPSHOT'
 }
 
-sourceCompatibility = 1.8
-
-repositories {
-	mavenCentral()
-	maven { url "https://repo.spring.io/milestone" }
-}
-
 
 dependencies {
 	compile('org.springframework.cloud:spring-cloud-starter-eureka-server')

@@ -1,6 +1,8 @@
 include 'mini_cloud_config'
 include 'mini_cloud_eureka'
+include 'mini_cloud_model'
 include 'mini_cloud_server'
-include 'mini_cloud_ui'
 
 rootProject.name = 'mini_cloud'
+
+
