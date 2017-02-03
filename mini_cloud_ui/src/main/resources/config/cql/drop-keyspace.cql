@@ -1,0 +1,1 @@
+DROP KEYSPACE IF EXISTS mini_cloud_ui;
