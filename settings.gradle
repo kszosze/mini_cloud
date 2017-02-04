@@ -1,0 +1,1 @@
+include ":mini_cloud_config", ":mini_cloud_eureka", ":mini_cloud_server", ":mini_cloud_ui"
