@@ -13,9 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.microf.backend.service.ServiceConstants.ADDRESS_MAP_UK;
+import static com.microf.backend.service.ServiceConstants.POSTCODE;
+import static com.microf.backend.service.ServiceConstants.SEARCH_PARAM;
 
 public class UKAddressServiceImpl implements IAddressService {
 
@@ -24,6 +29,12 @@ public class UKAddressServiceImpl implements IAddressService {
 
     @Value("API_KEY")
     private String api_key;
+
+    @Value("server.api.address.by.code.uk")
+    private String addressByCodeURL;
+
+    @Value("server.api.addressgeo.uk")
+    private String addressgeoByCodeURL;
 
     private final Map<String, String> uri_map = new HashMap<>();
 
@@ -37,24 +48,35 @@ public class UKAddressServiceImpl implements IAddressService {
     @Override
     public List<Address> getAddressByCode(String search_param) {
         final List<Address> listAddress = new ArrayList<>();
-        final IMap<String,Address> map = hazelcastnstance.getMap(ADDRESS_MAP_UK);
+        final IMap<String,UKAddress> map = hazelcastnstance.getMap(ADDRESS_MAP_UK);
 
-        final Predicate postCodePredicate = Predicates.equal( "postcode", search_param );
+        final Predicate postCodePredicate = Predicates.equal(POSTCODE, search_param );
         listAddress.addAll(map.values(postCodePredicate));
 
         if (listAddress.isEmpty()) {
-            uri_map.put("search_param", search_param);
-            ResponseEntity<UKAddress[]> ukAddress = restTemplate
-                    .getForEntity("http://ws.postcoder.com/pcw/{api-key}/address/uk/{search_param}?format=json", UKAddress[].class, uri_map);
-            listAddress.addAll(Arrays.asList(ukAddress.getBody()));
-            listAddress.forEach(address -> map.put(address.getPostcode(), address));
+            uri_map.put(SEARCH_PARAM, search_param);
+            fillCollections(restTemplate
+                    .getForEntity(addressByCodeURL, UKAddress[].class, uri_map), map, listAddress);
         }
         return listAddress;
     }
 
     @Override
     public List<Address> getAddressGeoByCode(String search_param) {
-        return null;
+
+        final List<Address> listAddress = new ArrayList<>();
+        final IMap<String,UKAddress> map = hazelcastnstance.getMap(ADDRESS_MAP_UK);
+
+        final Predicate postCodePredicate = Predicates.equal(POSTCODE, search_param );
+        listAddress.addAll(map.values(postCodePredicate));
+
+        if (listAddress.isEmpty()) {
+            uri_map.put(SEARCH_PARAM, search_param);
+            fillCollections(restTemplate
+                                .getForEntity(addressgeoByCodeURL, UKAddress[].class, uri_map), map, listAddress);
+        }
+        return listAddress;
+
     }
 
     @Override
@@ -70,5 +92,15 @@ public class UKAddressServiceImpl implements IAddressService {
     @Override
     public List<Address> getAddressByPosition(String latitude, String longitude, String range) {
         return null;
+    }
+
+    private void fillCollections(final ResponseEntity<UKAddress[]> ukAddressJSON,
+                                 final IMap<String,UKAddress> map,
+                                 final List<Address> listAddress) {
+
+        for (UKAddress ukAddress : ukAddressJSON.getBody()) {
+            map.put(ukAddress.getPostcode(), ukAddress);
+            listAddress.add(ukAddress);
+        }
     }
 }

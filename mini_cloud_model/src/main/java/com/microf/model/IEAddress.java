@@ -10,6 +10,10 @@ public class IEAddress extends Address {
 
     private String what3words;
 
+    public IEAddress(final String latitude, final String longitude, final String what3words) {
+        super(latitude, longitude);
+        this.what3words = what3words;
+    }
 
     public String getWhat3words() {
         return what3words;

@@ -1,7 +1,7 @@
 package com.microf.backend.controller;
 
 import com.microf.backend.service.IAddressService;
-import com.microf.model.IEAddress;
+import com.microf.model.Address;
 import com.microf.model.Position;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +27,14 @@ public class IEAddressController {
     private String SEARCH_RANGE;
 
 	@RequestMapping("/{ierCode}")
-	public List<IEAddress> getIEAddressByCode(@PathVariable("ierCode") String ierCode) {
+	public List<Address> getIEAddressByCode(@PathVariable("ierCode") String ierCode) {
 		return addressService.getAddressByCode(ierCode);
 	}
 
 	@RequestMapping("/addressgeo/{ierCode}")
-	public List<IEAddress> getAddressAndGeoByCode(@PathVariable("ierCode") String ierCode,
-                                                  @RequestParam("addtags") String addTags) {
-	    final List<IEAddress> listAddress = new ArrayList<>();
+	public List<Address> getAddressAndGeoByCode(@PathVariable("ierCode") String ierCode,
+												@RequestParam("addtags") String addTags) {
+	    final List<Address> listAddress = new ArrayList<>();
 	    if (StringUtils.isEmpty(addTags)) {
             listAddress.addAll(addressService.getAddressGeoByCode(ierCode));
         } else {
@@ -48,8 +48,8 @@ public class IEAddressController {
 	    return addressService.getAddressPositionByCode(ierCode).get(0);
 	}
 
-    @RequestMapping("/rgeo/53.332067/-6.255492")
-    public List<IEAddress> getIEAddressFromPosition(@PathVariable("latitude") String latitude,
+    @RequestMapping("/rgeo/{latitude}/{longitude}")
+    public List<Address> getIEAddressFromPosition(@PathVariable("latitude") String latitude,
                                               @PathVariable("longitude") String longitude) {
 	    return addressService.getAddressByPosition(latitude, longitude, SEARCH_RANGE);
 	}

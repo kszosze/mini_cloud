@@ -58,10 +58,9 @@ public class IEAddressServiceImpl implements IAddressService {
 
         if (listAddress.isEmpty()) {
             uri_map.put(SEARCH_PARAM, search_param);
-            ResponseEntity<IEAddress[]> ieAddress = restTemplate
-                    .getForEntity(addressByCodeURL, IEAddress[].class, uri_map);
-            listAddress.addAll(Arrays.asList(ieAddress.getBody()));
-            listAddress.forEach(address -> map.put(address.getPostcode(), address));
+            fillCollections(restTemplate
+                    .getForEntity(addressByCodeURL, IEAddress[].class, uri_map), map, listAddress);
+
         }
         return listAddress;
     }
@@ -69,17 +68,16 @@ public class IEAddressServiceImpl implements IAddressService {
     @Override
     public List<Address> getAddressGeoByCode(String search_param) {
         final List<Address> listAddress = new ArrayList<>();
-        final IMap<String,Address> map = instance.getMap(ADDRESS_MAP_IE);
+        final IMap<String,IEAddress> map = instance.getMap(ADDRESS_MAP_IE);
 
         final Predicate postCodePredicate = Predicates.equal(POSTCODE, search_param );
         listAddress.addAll(map.values(postCodePredicate));
 
         if (listAddress.isEmpty()) {
             uri_map.put(SEARCH_PARAM, search_param);
-            ResponseEntity<IEAddress[]> ieAddress = restTemplate
-                    .getForEntity(addressgeoByCodeURL, IEAddress[].class, uri_map);
-            listAddress.addAll(Arrays.asList(ieAddress.getBody()));
-            listAddress.forEach(address -> map.put(address.getPostcode(), address));
+            fillCollections(restTemplate
+                    .getForEntity(addressgeoByCodeURL, IEAddress[].class, uri_map), map, listAddress);
+
         }
         return listAddress;
     }
@@ -97,10 +95,9 @@ public class IEAddressServiceImpl implements IAddressService {
 
         if (listAddress.isEmpty()) {
             uri_map.put(SEARCH_PARAM, search_param);
-            ResponseEntity<IEAddress[]> ieAddress = restTemplate
-                    .getForEntity(addressgeoByCodeURL.concat("&addtags=w3w"), IEAddress[].class, uri_map);
-            listAddress.addAll(Arrays.asList(ieAddress.getBody()));
-            listAddress.forEach(address -> map.put(address.getPostcode(), address));
+            fillCollections(restTemplate
+                    .getForEntity(addressgeoByCodeURL.concat("&addtags=w3w"), IEAddress[].class, uri_map), map, listAddress);
+
         }
         return listAddress;
     }
@@ -129,12 +126,20 @@ public class IEAddressServiceImpl implements IAddressService {
             uri_map.put(LATITUDE, latitude);
             uri_map.put(LONGITUDE, longitude);
             uri_map.put(RANGE, range);
-            ResponseEntity<IEAddress[]> ieAddress = restTemplate
-                    .getForEntity(addressByPositionURL, IEAddress[].class, uri_map);
-            listAddress.addAll(Arrays.asList(ieAddress.getBody()));
-            listAddress.forEach(address -> map.put(address.getPostcode(), address));
+            fillCollections(restTemplate
+                    .getForEntity(addressByPositionURL, IEAddress[].class, uri_map), map, listAddress);
+
         }
         return listAddress;
     }
 
+    private void fillCollections(final ResponseEntity<IEAddress[]> ieAddressJSON,
+                                 final IMap<String,IEAddress> map,
+                                 final List<Address> listAddress) {
+
+        for (IEAddress ieAddress : ieAddressJSON.getBody()) {
+            map.put(ieAddress.getPostcode(), ieAddress);
+            listAddress.add(ieAddress);
+        }
+    }
 }

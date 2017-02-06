@@ -135,7 +135,7 @@ $http.post('/save', data, {
 
 
 ## How it works:
-This library is split into two modules, an $http `interceptor`, and a `service`:
+This library is split into two modules, an $http `interceptor`, and a `com.microf.backend.service`:
 
 **Interceptor**  
 The interceptor simply listens for all outgoing XHR requests, and then instructs the loadingBar service to start, stop, and increment accordingly.  There is no public API for the interceptor.  It can be used stand-alone by including `cfp.loadingBarInterceptor` as a dependency for your module.
