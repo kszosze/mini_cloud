@@ -10,13 +10,13 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_eureka/mini_cloud_eureka_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_eureka/mini_cloud_eureka_main.iml" group="mini_cloud_eureka" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_eureka/mini_cloud_eureka_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_eureka/mini_cloud_eureka_test.iml" group="mini_cloud_eureka" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_main.iml" group="mini_cloud" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_model/mini_cloud_model.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_model/mini_cloud_model.iml" group="mini_cloud_model" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_model/mini_cloud_model_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_model/mini_cloud_model_main.iml" group="mini_cloud_model" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_model/mini_cloud_model_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_model/mini_cloud_model_test.iml" group="mini_cloud_model" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_server/mini_cloud_server.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_server/mini_cloud_server.iml" group="mini_cloud_server" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_server/mini_cloud_server_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_server/mini_cloud_server_main.iml" group="mini_cloud_server" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_server/mini_cloud_server_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_server/mini_cloud_server_test.iml" group="mini_cloud_server" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_test.iml" group="mini_cloud" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_model/model.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_model/model.iml" group="model" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_model/model_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_model/model_main.iml" group="model" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_model/model_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_model/model_test.iml" group="model" />
     </modules>
   </component>
 </project>
