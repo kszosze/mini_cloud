@@ -16,16 +16,26 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import java.util.*;
 
-import static com.microf.backend.service.ServiceConstants.ADDRESS_MAP_IE;
+import static com.microf.backend.service.ServiceConstants.*;
 
 @Service("IEAddressService")
 public class IEAddressServiceImpl implements IAddressService {
 
+
     @Autowired
     private HazelcastInstance instance;
 
-    @Value("API_KEY")
+    @Value("server.api.key")
     private String api_key;
+
+    @Value("server.api.address.by.code.ie")
+    private String addressByCodeURL;
+
+    @Value("server.api.addressgeo.ie")
+    private String addressgeoByCodeURL;
+
+    @Value("server.api.address.by.position.ie")
+    private String addressByPositionURL;
 
     private final Map<String, String> uri_map = new HashMap<>();
 
@@ -33,7 +43,7 @@ public class IEAddressServiceImpl implements IAddressService {
 
     @PostConstruct
     private void init() {
-        uri_map.put("api_key", api_key);
+        uri_map.put(API_KEY, api_key);
     }
 
     @Override
@@ -41,15 +51,15 @@ public class IEAddressServiceImpl implements IAddressService {
         final List<Address> listAddress = new ArrayList<>();
         final IMap<String,IEAddress> map = instance.getMap(ADDRESS_MAP_IE);
 
-        final Predicate postCodePredicate = Predicates.equal( "postcode", search_param );
-        final Predicate addressPredicate = Predicates.ilike( "summaryline", search_param );
+        final Predicate postCodePredicate = Predicates.equal(POSTCODE, search_param );
+        final Predicate addressPredicate = Predicates.ilike(SUMMARYLINE, search_param );
         final Predicate predicate = Predicates.or( postCodePredicate, addressPredicate );
         listAddress.addAll(map.values(predicate));
 
         if (listAddress.isEmpty()) {
-            uri_map.put("search_param", search_param);
+            uri_map.put(SEARCH_PARAM, search_param);
             ResponseEntity<IEAddress[]> ieAddress = restTemplate
-                    .getForEntity("http://ws.postcoder.com/pcw/{api_key}/address/ie/{search_code}&format=json", IEAddress[].class, uri_map);
+                    .getForEntity(addressByCodeURL, IEAddress[].class, uri_map);
             listAddress.addAll(Arrays.asList(ieAddress.getBody()));
             listAddress.forEach(address -> map.put(address.getPostcode(), address));
         }
@@ -61,13 +71,13 @@ public class IEAddressServiceImpl implements IAddressService {
         final List<Address> listAddress = new ArrayList<>();
         final IMap<String,Address> map = instance.getMap(ADDRESS_MAP_IE);
 
-        final Predicate postCodePredicate = Predicates.equal( "postcode", search_param );
+        final Predicate postCodePredicate = Predicates.equal(POSTCODE, search_param );
         listAddress.addAll(map.values(postCodePredicate));
 
         if (listAddress.isEmpty()) {
-            uri_map.put("search_param", search_param);
+            uri_map.put(SEARCH_PARAM, search_param);
             ResponseEntity<IEAddress[]> ieAddress = restTemplate
-                    .getForEntity("http://ws.postcoder.com/pcw/{api-key}/addressgeo/ie/{search_param}?format=json", IEAddress[].class, uri_map);
+                    .getForEntity(addressgeoByCodeURL, IEAddress[].class, uri_map);
             listAddress.addAll(Arrays.asList(ieAddress.getBody()));
             listAddress.forEach(address -> map.put(address.getPostcode(), address));
         }
@@ -80,15 +90,15 @@ public class IEAddressServiceImpl implements IAddressService {
         final List<Address> listAddress = new ArrayList<>();
         final IMap<String,IEAddress> map = instance.getMap(ADDRESS_MAP_IE);
 
-        final Predicate postCodePredicate = Predicates.equal( "postcode", search_param );
-        final Predicate addressPredicate = Predicates.ilike( "summaryline", search_param );
+        final Predicate postCodePredicate = Predicates.equal(POSTCODE, search_param );
+        final Predicate addressPredicate = Predicates.ilike(SUMMARYLINE, search_param );
         final Predicate predicate = Predicates.or( postCodePredicate, addressPredicate );
         listAddress.addAll(map.values(predicate));
 
         if (listAddress.isEmpty()) {
-            uri_map.put("search_param", search_param);
+            uri_map.put(SEARCH_PARAM, search_param);
             ResponseEntity<IEAddress[]> ieAddress = restTemplate
-                    .getForEntity("http://ws.postcoder.com/pcw/{api_key}/addressgeo/ie/{search_param}?format=json&addtags=w3w", IEAddress[].class, uri_map);
+                    .getForEntity(addressgeoByCodeURL.concat("&addtags=w3w"), IEAddress[].class, uri_map);
             listAddress.addAll(Arrays.asList(ieAddress.getBody()));
             listAddress.forEach(address -> map.put(address.getPostcode(), address));
         }
@@ -110,17 +120,17 @@ public class IEAddressServiceImpl implements IAddressService {
         final List<Address> listAddress = new ArrayList<>();
         final IMap<String,IEAddress> map = instance.getMap(ADDRESS_MAP_IE);
 
-        final Predicate postCodePredicate = Predicates.equal( "latitude", latitude );
-        final Predicate addressPredicate = Predicates.ilike( "longitude", longitude );
+        final Predicate postCodePredicate = Predicates.equal(LATITUDE, latitude );
+        final Predicate addressPredicate = Predicates.ilike(LONGITUDE, longitude );
 
         final Predicate predicate = Predicates.and( postCodePredicate, addressPredicate );
         listAddress.addAll(map.values(predicate));
         if (listAddress.isEmpty()) {
-            uri_map.put("latitude", latitude);
-            uri_map.put("longitude", longitude);
-            uri_map.put("range", range);
+            uri_map.put(LATITUDE, latitude);
+            uri_map.put(LONGITUDE, longitude);
+            uri_map.put(RANGE, range);
             ResponseEntity<IEAddress[]> ieAddress = restTemplate
-                    .getForEntity("http://ws.postcoder.com/pcw/{api-key}/rgeo/ie/{latitude}/{longitude}?distance={range}", IEAddress[].class, uri_map);
+                    .getForEntity(addressByPositionURL, IEAddress[].class, uri_map);
             listAddress.addAll(Arrays.asList(ieAddress.getBody()));
             listAddress.forEach(address -> map.put(address.getPostcode(), address));
         }
