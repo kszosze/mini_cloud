@@ -18,6 +18,22 @@ public class UKAddress extends Address {
     private String totalresults; // 	Integer 	Total number of addresses for the search (only shown if more than 100 results)
     private String alias; // 	Boolean 	Indicates address is an alias record, only present when used with ?alias=true
 
+    public UKAddress(String latitude, String longitude, String addressline1, String addressline2, String addressline3, String summaryline, String buildingname, String organisation, String number, String premise, String dependentstreet, String street, String doubledependentlocality, String dependentlocality, String posttown, String county, String postcode, String pobox, String departmentname, String subbuildingname, String recodes, String morevalues, String nextpage, String totalresults, String alias) {
+        super(latitude, longitude, addressline1, addressline2, addressline3, summaryline, buildingname, organisation, number, premise, dependentstreet, street, doubledependentlocality, dependentlocality, posttown, county, postcode);
+        this.pobox = pobox;
+        this.departmentname = departmentname;
+        this.subbuildingname = subbuildingname;
+        this.recodes = recodes;
+        this.morevalues = morevalues;
+        this.nextpage = nextpage;
+        this.totalresults = totalresults;
+        this.alias = alias;
+    }
+
+    public UKAddress(String latitude, String longitude) {
+        super(latitude, longitude);
+    }
+
     public String getPobox() {
         return pobox;
     }

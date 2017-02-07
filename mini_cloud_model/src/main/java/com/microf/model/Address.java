@@ -5,7 +5,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Address extends Position {
+import java.io.Serializable;
+
+public class Address extends Position implements Serializable {
 
     private String addressline1;
     private String addressline2;
@@ -22,6 +24,25 @@ public class Address extends Position {
     private String posttown; // 	String 	Post town 	Norwich
     private String county; // 	String 	County 	Norfolk
     private String postcode; // 	String 	Postcode 	NR14 7PZ
+
+    public Address(String latitude, String longitude, String addressline1, String addressline2, String addressline3, String summaryline, String buildingname, String organisation, String number, String premise, String dependentstreet, String street, String doubledependentlocality, String dependentlocality, String posttown, String county, String postcode) {
+        super(latitude, longitude);
+        this.addressline1 = addressline1;
+        this.addressline2 = addressline2;
+        this.addressline3 = addressline3;
+        this.summaryline = summaryline;
+        this.buildingname = buildingname;
+        this.organisation = organisation;
+        this.number = number;
+        this.premise = premise;
+        this.dependentstreet = dependentstreet;
+        this.street = street;
+        this.doubledependentlocality = doubledependentlocality;
+        this.dependentlocality = dependentlocality;
+        this.posttown = posttown;
+        this.county = county;
+        this.postcode = postcode;
+    }
 
     public Address(String latitude, String longitude) {
         super(latitude, longitude);

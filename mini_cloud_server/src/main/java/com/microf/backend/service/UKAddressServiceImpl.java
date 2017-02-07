@@ -8,8 +8,10 @@ import com.microf.model.Address;
 import com.microf.model.Position;
 import com.microf.model.UKAddress;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
@@ -18,10 +20,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.microf.backend.service.ServiceConstants.ADDRESS_MAP_UK;
-import static com.microf.backend.service.ServiceConstants.POSTCODE;
-import static com.microf.backend.service.ServiceConstants.SEARCH_PARAM;
+import static com.microf.backend.service.ServiceConstants.*;
 
+@Service(value = "UKAddressService")
+@Qualifier("UKAddressService")
 public class UKAddressServiceImpl implements IAddressService {
 
     @Autowired

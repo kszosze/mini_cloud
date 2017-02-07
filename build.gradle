@@ -21,12 +21,24 @@ buildscript {
 allprojects {
 
     group = 'com.microf'
+    version = '0.0.1-SNAPSHOT'
+
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+}
+
+subprojects {
+
+    apply plugin: 'io.spring.dependency-management'
 
     apply plugin: 'java'
-    apply plugin: 'eclipse'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'idea'
-    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    project.ext {
+        springBootVersion = '1.5.1.RELEASE'
+    }
 
     repositories {
         mavenLocal()
@@ -43,4 +55,8 @@ allprojects {
 
         }
     }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14'
 }

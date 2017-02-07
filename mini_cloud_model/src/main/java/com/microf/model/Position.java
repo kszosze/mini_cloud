@@ -4,10 +4,15 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Position {
+import java.io.Serializable;
+
+public class Position implements Serializable{
 
     private String latitude; //	ETRS89 Latitude Co-ordinate
     private String longitude; //	ETRS89 Longitude Co-ordinate
+
+    public Position() {
+    }
 
     public Position(String latitude, String longitude) {
         this.latitude = latitude;

@@ -1,4 +1,4 @@
-package com.microf;
+package com.microf.eureka;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

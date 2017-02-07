@@ -8,6 +8,7 @@ import com.microf.model.Address;
 import com.microf.model.IEAddress;
 import com.microf.model.Position;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,8 @@ import java.util.*;
 
 import static com.microf.backend.service.ServiceConstants.*;
 
-@Service("IEAddressService")
+@Service(value = "IEAddressService")
+@Qualifier( "IEAddressService")
 public class IEAddressServiceImpl implements IAddressService {
 
 
@@ -39,7 +41,13 @@ public class IEAddressServiceImpl implements IAddressService {
 
     private final Map<String, String> uri_map = new HashMap<>();
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
+
+    public IEAddressServiceImpl(final HazelcastInstance hazelcastInstance, final RestTemplate restTemplate) {
+        this.instance = hazelcastInstance;
+        this.restTemplate = restTemplate;
+    }
 
     @PostConstruct
     private void init() {

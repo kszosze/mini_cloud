@@ -1,6 +1,17 @@
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$project.ext.springBootVersion")
+    }
+}
 
-apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
+
+description = 'server'
 
 jar {
     baseName = 'backend'
@@ -16,8 +27,9 @@ repositories {
 
 dependencies {
     compile project(':mini_cloud_model')
-    compile("com.hazelcast:hazelcast:3.3.5")
-    compile("com.hazelcast:hazelcast-client:3.3.5")
+    compile("com.hazelcast:hazelcast")
+    compile("com.hazelcast:hazelcast-spring")
+
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.cloud:spring-cloud-starter-config')
     compile('org.springframework.cloud:spring-cloud-starter-eureka')
@@ -25,6 +37,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-hateoas')
     compile("org.springframework.boot:spring-boot-starter-web-services")
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile group: "com.hazelcast", name: "hazelcast", classifier:"tests"
 }
 
 dependencyManagement {
@@ -34,3 +47,4 @@ dependencyManagement {
     }
 }
 
+tasks.eclipse.dependsOn(build)
