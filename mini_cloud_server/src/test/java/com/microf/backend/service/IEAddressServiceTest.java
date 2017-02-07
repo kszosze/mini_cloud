@@ -36,8 +36,10 @@ import static org.mockito.Mockito.when;
 public class IEAddressServiceTest {
 
 
-    private final IEAddress ieAddress1 = new IEAddressBuilder().setPostcode("BT274YW").setAddressline1("Hilden Court").setSummaryline("Hilden Court").createIEAddress();
-    private final IEAddress ieAddress2 = new IEAddressBuilder().setPostcode("BT285YW").setAddressline1("SomeWhere Court").setSummaryline("SomeWhere Court").createIEAddress();
+    private final IEAddress ieAddress1 = new IEAddressBuilder().setPostcode("BT274YW").setAddressline1("Hilden Court").setSummaryline("Hilden Court").setLatitude("54.78665").setLongitude("34.6789").createIEAddress();
+    private final IEAddress ieAddress2 = new IEAddressBuilder().setPostcode("BT285YW").setAddressline1("SomeWhere Court").setSummaryline("SomeWhere Court").setLatitude("54.80665").setLongitude("34.6790").createIEAddress();
+    private final IEAddress ieAddress3 = new IEAddressBuilder().setPostcode("BT284YW").setAddressline1("SomeWhere Hill").setSummaryline("SomeWhere Hill").setLatitude("54.78445").setLongitude("34.6556").createIEAddress();
+    private final IEAddress ieAddress4 = new IEAddressBuilder().setPostcode("BT274YW").setAddressline1("Hilden Mill").setSummaryline("Hilden Mill").setLatitude("54.78665").setLongitude("34.6789").createIEAddress();
 
     @Autowired
     private HazelcastInstance hazelcastInstance;
@@ -52,6 +54,7 @@ public class IEAddressServiceTest {
         addressService = new IEAddressServiceImpl(hazelcastInstance, restTemplate);
         hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress1.getPostcode(), ieAddress1);
         hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress2.getPostcode(), ieAddress2);
+        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress4.getPostcode(), ieAddress4);
 
     }
 
@@ -69,6 +72,8 @@ public class IEAddressServiceTest {
 
         assertThat(ieAddress, is(not(empty())));
         assertThat(ieAddress, hasItem(ieAddress1));
+        assertThat(ieAddress, hasItem(ieAddress4));
+
     }
 
     /**
@@ -76,16 +81,16 @@ public class IEAddressServiceTest {
      */
     @Test
     public void testGetAddressByCodeInServer() throws Exception {
+
+        List<IEAddress> listAddress = Arrays.asList(ieAddress3);
+        ResponseEntity response = ResponseEntity.ok(listAddress.toArray());
+
+        when(restTemplate.getForEntity(anyString(), Mockito.<Class<IEAddress[]>> any(), Matchers.<Map<String, String>> any())).thenReturn(response);
         List<Address> ieAddress = addressService.getAddressByCode("BT284YW");
 
-        List<Address> listAddress = Arrays.asList(ieAddress1, ieAddress2);
-        ResponseEntity response = ResponseEntity.ok(listAddress);
-
-        when(restTemplate.getForEntity(anyString(), Mockito.<Class<IEAddress[]>> any(), Matchers.<Map<String, String>>any())).thenReturn(response);
-
         assertThat(ieAddress, is(not(empty())));
-        assertThat(ieAddress, hasItem(ieAddress1));
-        assertThat(ieAddress, hasItem(ieAddress2));
+        assertThat(ieAddress, hasItem(ieAddress3));
+        assertThat(ieAddress, not(hasItem(ieAddress2)));
 
     }
 
@@ -93,8 +98,29 @@ public class IEAddressServiceTest {
      * Method: getAddressGeoByCode(String search_param)
      */
     @Test
-    public void testGetAddressGeoByCode() throws Exception {
+    public void testGetAddressGeoByCodeInMemory() throws Exception {
+       List<Address> ieAddress = addressService.getAddressGeoByCode("BT274YW");
 
+        assertThat(ieAddress, is(not(empty())));
+        assertThat(ieAddress, hasItem(ieAddress4));
+        assertThat(ieAddress, hasItem(ieAddress1));
+
+    }
+
+    /**
+     * Method: getAddressGeoByCode(String search_param)
+     */
+    @Test
+    public void testGetAddressGeoByCodeInServer() throws Exception {
+        List<IEAddress> listAddress = Arrays.asList(ieAddress3);
+        ResponseEntity response = ResponseEntity.ok(listAddress.toArray());
+
+        when(restTemplate.getForEntity(anyString(), Mockito.<Class<IEAddress[]>> any(), Matchers.<Map<String, String>> any())).thenReturn(response);
+        List<Address> ieAddress = addressService.getAddressByCode("BT284YW");
+
+        assertThat(ieAddress, is(not(empty())));
+        assertThat(ieAddress, hasItem(ieAddress3));
+        assertThat(ieAddress, not(hasItem(ieAddress2)));
     }
 
     /**
