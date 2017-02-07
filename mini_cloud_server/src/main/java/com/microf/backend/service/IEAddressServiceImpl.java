@@ -65,10 +65,7 @@ public class IEAddressServiceImpl implements IAddressService {
         listAddress.addAll(map.values(predicate));
 
         if (listAddress.isEmpty()) {
-            uri_map.put(SEARCH_PARAM, search_param);
-            fillCollections(restTemplate
-                    .getForEntity(addressByCodeURL, IEAddress[].class, uri_map), map, listAddress);
-
+            listAddress.addAll(getAddressByCodeAndWhat3Words(search_param));
         }
         return listAddress;
     }
@@ -82,10 +79,7 @@ public class IEAddressServiceImpl implements IAddressService {
         listAddress.addAll(map.values(postCodePredicate));
 
         if (listAddress.isEmpty()) {
-            uri_map.put(SEARCH_PARAM, search_param);
-            fillCollections(restTemplate
-                    .getForEntity(addressgeoByCodeURL, IEAddress[].class, uri_map), map, listAddress);
-
+            listAddress.addAll(getAddressByCodeAndWhat3Words(search_param));
         }
         return listAddress;
     }

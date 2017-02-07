@@ -1,20 +1,36 @@
 package com.microf.backend.controller;
 
-import org.junit.Test; 
+import com.hazelcast.core.HazelcastInstance;
+import com.microf.backend.ServerConfigurationTest;
+import com.microf.backend.service.IAddressService;
+import com.microf.backend.service.UKAddressServiceImpl;
+import org.junit.Test;
 import org.junit.Before; 
-import org.junit.After; 
+import org.junit.After;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
-/** 
-* UKAddressController Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>Feb 6, 2017</pre> 
-* @version 1.0 
-*/ 
-public class UKAddressControllerTest { 
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = { ServerConfigurationTest.class })
+public class UKAddressControllerTest {
+
+    private final Logger log = LoggerFactory.getLogger(UKAddressControllerTest.class);
+
+    @Autowired private HazelcastInstance hazelcastInstance;
+
+    private IAddressService addressService;
+
+    @Mock private RestTemplate restTemplate;
 
 @Before
-public void before() throws Exception { 
+public void before() throws Exception {
+    addressService = new UKAddressServiceImpl(hazelcastInstance, restTemplate);
 } 
 
 @After

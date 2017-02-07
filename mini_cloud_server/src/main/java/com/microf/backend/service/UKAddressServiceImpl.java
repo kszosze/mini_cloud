@@ -27,7 +27,7 @@ import static com.microf.backend.service.ServiceConstants.*;
 public class UKAddressServiceImpl implements IAddressService {
 
     @Autowired
-    private HazelcastInstance hazelcastnstance;
+    private HazelcastInstance hazelcasInstance;
 
     @Value("API_KEY")
     private String api_key;
@@ -40,7 +40,13 @@ public class UKAddressServiceImpl implements IAddressService {
 
     private final Map<String, String> uri_map = new HashMap<>();
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate = new RestTemplate();
+
+    public UKAddressServiceImpl(final HazelcastInstance hazelcastInstance, final RestTemplate restTemplate) {
+        this.hazelcasInstance = hazelcastInstance;
+        this.restTemplate = restTemplate;
+    }
 
     @PostConstruct
     private void init() {
@@ -50,7 +56,7 @@ public class UKAddressServiceImpl implements IAddressService {
     @Override
     public List<Address> getAddressByCode(String search_param) {
         final List<Address> listAddress = new ArrayList<>();
-        final IMap<String,UKAddress> map = hazelcastnstance.getMap(ADDRESS_MAP_UK);
+        final IMap<String,UKAddress> map = hazelcasInstance.getMap(ADDRESS_MAP_UK);
 
         final Predicate postCodePredicate = Predicates.equal(POSTCODE, search_param );
         listAddress.addAll(map.values(postCodePredicate));
@@ -67,7 +73,7 @@ public class UKAddressServiceImpl implements IAddressService {
     public List<Address> getAddressGeoByCode(String search_param) {
 
         final List<Address> listAddress = new ArrayList<>();
-        final IMap<String,UKAddress> map = hazelcastnstance.getMap(ADDRESS_MAP_UK);
+        final IMap<String,UKAddress> map = hazelcasInstance.getMap(ADDRESS_MAP_UK);
 
         final Predicate postCodePredicate = Predicates.equal(POSTCODE, search_param );
         listAddress.addAll(map.values(postCodePredicate));
