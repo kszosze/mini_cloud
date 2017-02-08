@@ -4,5 +4,6 @@ include 'mini_cloud_model'
 include 'mini_cloud_server'
 
 rootProject.name = 'mini_cloud'
-
+include 'mini_cloud_api-gateway'
+findProject(':mini_cloud_api-gateway')?.name = 'api-gateway'
 
