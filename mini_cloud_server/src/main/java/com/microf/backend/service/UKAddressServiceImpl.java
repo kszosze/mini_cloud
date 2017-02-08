@@ -41,11 +41,14 @@ public class UKAddressServiceImpl implements IAddressService {
     private final Map<String, String> uri_map = new HashMap<>();
 
     @Autowired
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
 
     public UKAddressServiceImpl(final HazelcastInstance hazelcastInstance, final RestTemplate restTemplate) {
         this.hazelcasInstance = hazelcastInstance;
         this.restTemplate = restTemplate;
+    }
+
+    public UKAddressServiceImpl() {
     }
 
     @PostConstruct

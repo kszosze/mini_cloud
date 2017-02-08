@@ -10,9 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.InvocationTargetException;
@@ -40,7 +38,7 @@ import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class) @ContextConfiguration(classes = { ServerConfigurationTest.class }) public class IEAddressServiceTest {
+@RunWith(SpringJUnit4ClassRunner.class)  @ContextConfiguration(classes = { ServerConfigurationTest.class }) public class IEAddressServiceTest {
 
     private final Logger log = LoggerFactory.getLogger(IEAddressServiceTest.class);
 
@@ -71,10 +69,8 @@ import static org.mockito.Mockito.when;
 
     @Autowired private HazelcastInstance hazelcastInstance;
 
-    @Mock
-    private RestTemplate restTemplate;
+    @Autowired private RestTemplate restTemplate;
 
-    @InjectMocks
     @Autowired
     @Qualifier("IEAddressService")
     private IAddressService addressService;
