@@ -18,3 +18,7 @@ hs_err_pid*
 .settings/
 .vscode/
 /build
+
+mini_cloud_server/build/
+
+mini_cloud_model/build/
