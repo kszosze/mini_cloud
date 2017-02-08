@@ -10,12 +10,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -69,15 +71,19 @@ import static org.mockito.Mockito.when;
 
     @Autowired private HazelcastInstance hazelcastInstance;
 
+    @Mock
+    private RestTemplate restTemplate;
+
+    @InjectMocks
+    @Autowired
+    @Qualifier("IEAddressService")
     private IAddressService addressService;
 
-    @Mock private RestTemplate restTemplate;
 
     @Before public void before() throws Exception {
-        addressService = new IEAddressServiceImpl(hazelcastInstance, restTemplate);
-        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress1.getPostcode(), ieAddress1);
-        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress2.getPostcode(), ieAddress2);
-        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress4.getPostcode(), ieAddress4);
+        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress1.hashCode(), ieAddress1);
+        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress2.hashCode(), ieAddress2);
+        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress4.hashCode(), ieAddress4);
 
     }
 
