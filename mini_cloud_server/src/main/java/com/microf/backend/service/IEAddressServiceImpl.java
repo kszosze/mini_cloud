@@ -23,9 +23,8 @@ import static com.microf.backend.service.ServiceConstants.*;
 @Qualifier( "IEAddressService")
 public class IEAddressServiceImpl implements IAddressService {
 
-
     @Autowired
-    private HazelcastInstance instance;
+    private HazelcastInstance hazelcastInstance;
 
     @Value("server.api.key")
     private String api_key;
@@ -44,9 +43,12 @@ public class IEAddressServiceImpl implements IAddressService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public IEAddressServiceImpl(final HazelcastInstance hazelcastInstance, final RestTemplate restTemplate) {
-        this.instance = hazelcastInstance;
+    public IEAddressServiceImpl(final RestTemplate restTemplate, final HazelcastInstance hazelcastInstance) {
+        this.hazelcastInstance = hazelcastInstance;
         this.restTemplate = restTemplate;
+    }
+
+    public IEAddressServiceImpl() {
     }
 
     @PostConstruct
@@ -57,7 +59,7 @@ public class IEAddressServiceImpl implements IAddressService {
     @Override
     public List<Address> getAddressByCode(String search_param) {
         final List<Address> listAddress = new ArrayList<>();
-        final IMap<String,IEAddress> map = instance.getMap(ADDRESS_MAP_IE);
+        final IMap<Integer,IEAddress> map = hazelcastInstance.getMap(ADDRESS_MAP_IE);
 
         final Predicate postCodePredicate = Predicates.equal(POSTCODE, search_param );
         final Predicate addressPredicate = Predicates.ilike(SUMMARYLINE, search_param );
@@ -73,7 +75,7 @@ public class IEAddressServiceImpl implements IAddressService {
     @Override
     public List<Address> getAddressGeoByCode(String search_param) {
         final List<Address> listAddress = new ArrayList<>();
-        final IMap<String,IEAddress> map = instance.getMap(ADDRESS_MAP_IE);
+        final IMap<Integer,IEAddress> map = hazelcastInstance.getMap(ADDRESS_MAP_IE);
 
         final Predicate postCodePredicate = Predicates.equal(POSTCODE, search_param );
         listAddress.addAll(map.values(postCodePredicate));
@@ -88,7 +90,7 @@ public class IEAddressServiceImpl implements IAddressService {
     @Override
     public List<Address> getAddressByCodeAndWhat3Words(String search_param) {
         final List<Address> listAddress = new ArrayList<>();
-        final IMap<String,IEAddress> map = instance.getMap(ADDRESS_MAP_IE);
+        final IMap<Integer,IEAddress> map = hazelcastInstance.getMap(ADDRESS_MAP_IE);
 
         final Predicate postCodePredicate = Predicates.equal(POSTCODE, search_param );
         final Predicate addressPredicate = Predicates.ilike(SUMMARYLINE, search_param );
@@ -117,7 +119,7 @@ public class IEAddressServiceImpl implements IAddressService {
     @Override
     public List<Address> getAddressByPosition(String latitude, String longitude, String range) {
         final List<Address> listAddress = new ArrayList<>();
-        final IMap<String,IEAddress> map = instance.getMap(ADDRESS_MAP_IE);
+        final IMap<Integer,IEAddress> map = hazelcastInstance.getMap(ADDRESS_MAP_IE);
 
         final Predicate postCodePredicate = Predicates.equal(LATITUDE, latitude );
         final Predicate addressPredicate = Predicates.ilike(LONGITUDE, longitude );
@@ -136,11 +138,11 @@ public class IEAddressServiceImpl implements IAddressService {
     }
 
     private void fillCollections(final ResponseEntity<IEAddress[]> ieAddressJSON,
-                                 final IMap<String,IEAddress> map,
+                                 final IMap<Integer,IEAddress> map,
                                  final List<Address> listAddress) {
 
         for (IEAddress ieAddress : ieAddressJSON.getBody()) {
-            map.put(ieAddress.getPostcode(), ieAddress);
+            map.put(ieAddress.hashCode(), ieAddress);
             listAddress.add(ieAddress);
         }
     }

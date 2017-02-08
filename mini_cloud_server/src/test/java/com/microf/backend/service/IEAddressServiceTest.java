@@ -12,14 +12,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.InvocationTargetException;
@@ -39,7 +39,7 @@ import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class) @ContextConfiguration(classes = { ServerConfigurationTest.class }) public class IEAddressServiceTest {
+@RunWith(SpringJUnit4ClassRunner.class)  @ContextConfiguration(classes = { ServerConfigurationTest.class }) public class IEAddressServiceTest {
 
     private final Logger log = LoggerFactory.getLogger(IEAddressServiceTest.class);
 
@@ -70,12 +70,14 @@ import static org.mockito.Mockito.when;
 
     @Autowired private HazelcastInstance hazelcastInstance;
 
+    @Autowired private RestTemplate restTemplate;
+
+    @Autowired
+    @Qualifier("IEAddressService")
     private IAddressService addressService;
 
-    @Mock private RestTemplate restTemplate;
 
     @Before public void before() throws Exception {
-        addressService = new IEAddressServiceImpl(hazelcastInstance, restTemplate);
         hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress1.hashCode(), ieAddress1);
         hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress2.hashCode(), ieAddress2);
         hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress4.hashCode(), ieAddress4);
@@ -135,7 +137,7 @@ import static org.mockito.Mockito.when;
         ResponseEntity response = ResponseEntity.ok(listAddress.toArray());
 
         when(restTemplate.getForEntity(anyString(), Mockito.<Class<IEAddress[]>>any(), Matchers.<Map<String, String>>any())).thenReturn(response);
-        List<Address> ieAddress = addressService.getAddressGeoByCode("BT284YW");
+        List<Address> ieAddress = addressService.getAddressByCode("BT284YW");
 
         assertThat(ieAddress, is(not(empty())));
         assertThat(ieAddress, hasItem(ieAddress3));
@@ -176,8 +178,7 @@ import static org.mockito.Mockito.when;
         assertThat(ieAddress.get(0).getLatitude(), is(notNullValue()));
         assertThat(ieAddress.get(0).getLongitude(), is(notNullValue()));
         assertThat(ieAddress.get(1).getLatitude(), is(notNullValue()));
-        assertThat(ieAddress.get(1).getLongitude(), is(notNullValue()));
-    }
+        assertThat(ieAddress.get(1).getLongitude(), is(notNullValue()));    }
 
     /**
      * Method: getAddressByPosition(String latitude, String longitude, String range)
