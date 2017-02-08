@@ -5,6 +5,7 @@ import com.hazelcast.core.IMap;
 import com.microf.backend.ServerConfigurationTest;
 import com.microf.model.Address;
 import com.microf.model.IEAddress;
+import com.microf.model.Position;
 import com.microf.model.builder.IEAddressBuilder;
 import org.junit.After;
 import org.junit.Before;
@@ -75,9 +76,9 @@ import static org.mockito.Mockito.when;
 
     @Before public void before() throws Exception {
         addressService = new IEAddressServiceImpl(hazelcastInstance, restTemplate);
-        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress1.getPostcode(), ieAddress1);
-        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress2.getPostcode(), ieAddress2);
-        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress4.getPostcode(), ieAddress4);
+        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress1.hashCode(), ieAddress1);
+        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress2.hashCode(), ieAddress2);
+        hazelcastInstance.getMap(ADDRESS_MAP_IE).putIfAbsent(ieAddress4.hashCode(), ieAddress4);
 
     }
 
@@ -134,7 +135,7 @@ import static org.mockito.Mockito.when;
         ResponseEntity response = ResponseEntity.ok(listAddress.toArray());
 
         when(restTemplate.getForEntity(anyString(), Mockito.<Class<IEAddress[]>>any(), Matchers.<Map<String, String>>any())).thenReturn(response);
-        List<Address> ieAddress = addressService.getAddressByCode("BT284YW");
+        List<Address> ieAddress = addressService.getAddressGeoByCode("BT284YW");
 
         assertThat(ieAddress, is(not(empty())));
         assertThat(ieAddress, hasItem(ieAddress3));
@@ -148,21 +149,51 @@ import static org.mockito.Mockito.when;
      * Method: getAddressByCodeAndWhat3Words(String search_param)
      */
     @Test public void testGetAddressByCodeAndWhat3Words() throws Exception {
+        List<IEAddress> listAddress = Arrays.asList(ieAddress3);
+        ResponseEntity response = ResponseEntity.ok(listAddress.toArray());
 
+        when(restTemplate.getForEntity(anyString(), Mockito.<Class<IEAddress[]>>any(), Matchers.<Map<String, String>>any())).thenReturn(response);
+        List<Address> ieAddress = addressService.getAddressByCodeAndWhat3Words("BT284YW");
+
+        assertThat(ieAddress, is(not(empty())));
+        assertThat(ieAddress, hasItem(ieAddress3));
+        assertThat(ieAddress, not(hasItem(ieAddress2)));
+        assertThat(ieAddress.get(0).getLatitude(), is(notNullValue()));
+        assertThat(ieAddress.get(0).getLongitude(), is(notNullValue()));
     }
 
     /**
      * Method: getAddressPositionByCode(String search_param)
      */
     @Test public void testGetAddressPositionByCode() throws Exception {
-        //TODO: Test goes here...
+        List<IEAddress> listAddress = Arrays.asList(ieAddress3);
+        ResponseEntity response = ResponseEntity.ok(listAddress.toArray());
+
+        when(restTemplate.getForEntity(anyString(), Mockito.<Class<IEAddress[]>>any(), Matchers.<Map<String, String>>any())).thenReturn(response);
+        List<Position> ieAddress = addressService.getAddressPositionByCode("BT284YW");
+
+        assertThat(ieAddress, is(not(empty())));
+        assertThat(ieAddress.get(0).getLatitude(), is(notNullValue()));
+        assertThat(ieAddress.get(0).getLongitude(), is(notNullValue()));
+        assertThat(ieAddress.get(1).getLatitude(), is(notNullValue()));
+        assertThat(ieAddress.get(1).getLongitude(), is(notNullValue()));
     }
 
     /**
      * Method: getAddressByPosition(String latitude, String longitude, String range)
      */
     @Test public void testGetAddressByPosition() throws Exception {
-        //TODO: Test goes here...
+        List<IEAddress> listAddress = Arrays.asList(ieAddress3);
+        ResponseEntity response = ResponseEntity.ok(listAddress.toArray());
+
+        when(restTemplate.getForEntity(anyString(), Mockito.<Class<IEAddress[]>>any(), Matchers.<Map<String, String>>any())).thenReturn(response);
+        List<Address> ieAddress = addressService.getAddressByPosition("54.78445", "34.6556", "50");
+
+        assertThat(ieAddress, is(not(empty())));
+        assertThat(ieAddress, hasItem(ieAddress3));
+        assertThat(ieAddress, not(hasItem(ieAddress2)));
+        assertThat(ieAddress.get(0).getLatitude(), is(notNullValue()));
+        assertThat(ieAddress.get(0).getLongitude(), is(notNullValue()));
     }
 
     /**
