@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/mini_cloud_api-gateway" />
             <option value="$PROJECT_DIR$/mini_cloud_config" />
             <option value="$PROJECT_DIR$/mini_cloud_eureka" />
             <option value="$PROJECT_DIR$/mini_cloud_model" />

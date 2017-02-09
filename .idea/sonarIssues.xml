@@ -13,6 +13,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/mini_cloud_api-gateway/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/mini_cloud_api-gateway/src/main/java/com/microf/ApiGatewayApplication.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/mini_cloud_config/build.gradle">
           <value>
             <set />
@@ -154,6 +164,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/mini_cloud_server/src/test/java/com/microf/backend/service/UKAddressServiceTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/mini_cloud_server/src/test/java/com/microf/backend/util/HazelcastFactoryMock.java">
           <value>
             <set />
           </value>

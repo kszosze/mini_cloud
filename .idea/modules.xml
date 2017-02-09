@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_api-gateway/api-gateway.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_api-gateway/api-gateway.iml" group="api-gateway" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_api-gateway/api-gateway_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_api-gateway/api-gateway_main.iml" group="api-gateway" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_api-gateway/api-gateway_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_api-gateway/api-gateway_test.iml" group="api-gateway" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_config/mini_cloud_config.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_config/mini_cloud_config.iml" group="mini_cloud_config" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mini_cloud_config/mini_cloud_config_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mini_cloud_config/mini_cloud_config_main.iml" group="mini_cloud_config" />
