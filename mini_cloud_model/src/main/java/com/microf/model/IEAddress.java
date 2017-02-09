@@ -10,6 +10,8 @@ public class IEAddress extends Address {
 
     private String what3words;
 
+    public IEAddress(){};
+
     public IEAddress(String latitude, String longitude, String addressline1, String addressline2, String addressline3, String summaryline, String buildingname, String organisation, String number, String premise, String dependentstreet, String street, String doubledependentlocality, String dependentlocality, String posttown, String county, String postcode, String what3words) {
         super(latitude, longitude, addressline1, addressline2, addressline3, summaryline, buildingname, organisation, number, premise, dependentstreet, street, doubledependentlocality, dependentlocality, posttown, county, postcode);
         this.what3words = what3words;

@@ -4,10 +4,10 @@ server:
         address:
           by:
             code:
-              ie: "http://ws.postcoder.com/pcw/{api_key}/address/ie/{search_code}&format=json"
-              uk: "http://ws.postcoder.com/pcw/{api_key}/address/uk/{search_param}?format=json"
+              ie: "http://ws.postcoder.com/pcw/{api_key}/address/ie/{search_code}&format=json&addtags=w3w"
+              uk: "http://ws.postcoder.com/pcw/{api_key}/address/uk/{search_param}?format=json&addtags=w3w"
             position:
               ie: "http://ws.postcoder.com/pcw/{api_key}/rgeo/ie/{latitude}/{longitude}?distance={range}"
         addressgeo:
-            ie: "http://ws.postcoder.com/pcw/{api_key}/addressgeo/ie/{search_param}?format=json"
-            uk: "http://ws.postcoder.com/pcw/{api_key}/addressgeo/uk/{search_param}?format=json"
+            ie: "http://ws.postcoder.com/pcw/{api_key}/addressgeo/ie/{search_param}?format=json&addtags=w3w"
+            uk: "http://ws.postcoder.com/pcw/{api_key}/addressgeo/uk/{search_param}?format=json&addtags=w3w"

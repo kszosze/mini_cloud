@@ -29,13 +29,13 @@ public class UKAddressServiceImpl implements IAddressService {
     @Autowired
     private HazelcastInstance hazelcasInstance;
 
-    @Value("API_KEY")
+    @Value("${server.api.key}")
     private String api_key;
 
-    @Value("server.api.address.by.code.uk")
+    @Value("${server.api.address.by.code.uk}")
     private String addressByCodeURL;
 
-    @Value("server.api.addressgeo.uk")
+    @Value("${server.api.addressgeo.uk}")
     private String addressgeoByCodeURL;
 
     private final Map<String, String> uri_map = new HashMap<>();

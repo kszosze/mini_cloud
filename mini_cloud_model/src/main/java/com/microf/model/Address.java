@@ -25,6 +25,10 @@ public class Address extends Position implements Serializable {
     private String county; // 	String 	County 	Norfolk
     private String postcode; // 	String 	Postcode 	NR14 7PZ
 
+    public Address() {
+        super();
+    }
+
     public Address(String latitude, String longitude, String addressline1, String addressline2, String addressline3, String summaryline, String buildingname, String organisation, String number, String premise, String dependentstreet, String street, String doubledependentlocality, String dependentlocality, String posttown, String county, String postcode) {
         super(latitude, longitude);
         this.addressline1 = addressline1;

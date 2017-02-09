@@ -26,16 +26,16 @@ public class IEAddressServiceImpl implements IAddressService {
     @Autowired
     private HazelcastInstance hazelcastInstance;
 
-    @Value("server.api.key")
+    @Value("${server.api.key}")
     private String api_key;
 
-    @Value("server.api.address.by.code.ie")
+    @Value("${server.api.address.by.code.ie}")
     private String addressByCodeURL;
 
-    @Value("server.api.addressgeo.ie")
+    @Value("${server.api.addressgeo.ie}")
     private String addressgeoByCodeURL;
 
-    @Value("server.api.address.by.position.ie")
+    @Value("${server.api.address.by.position.ie}")
     private String addressByPositionURL;
 
     private final Map<String, String> uri_map = new HashMap<>();
@@ -100,7 +100,7 @@ public class IEAddressServiceImpl implements IAddressService {
         if (listAddress.isEmpty()) {
             uri_map.put(SEARCH_PARAM, search_param);
             fillCollections(restTemplate
-                    .getForEntity(addressgeoByCodeURL.concat("&addtags=w3w"), IEAddress[].class, uri_map), map, listAddress);
+                    .getForEntity(addressgeoByCodeURL, IEAddress[].class, uri_map), map, listAddress);
 
         }
         return listAddress;
