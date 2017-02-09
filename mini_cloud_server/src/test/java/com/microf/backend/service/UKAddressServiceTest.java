@@ -2,6 +2,7 @@ package com.microf.backend.service;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+import com.microf.backend.ServerCommonConfigurationTest;
 import com.microf.backend.ServerConfigurationTest;
 import com.microf.model.Address;
 import com.microf.model.UKAddress;
@@ -39,7 +40,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ServerConfigurationTest.class})
+@ContextConfiguration(classes = {ServerCommonConfigurationTest.class, ServerConfigurationTest.class})
 public class UKAddressServiceTest {
 
     private final Logger log = LoggerFactory.getLogger(UKAddressServiceTest.class);

@@ -1,6 +1,7 @@
 package com.microf.backend.service;
 
 import com.hazelcast.core.HazelcastInstance;
+import com.microf.backend.ServerCommonConfigurationTest;
 import com.microf.backend.ServerConfigurationIntegrationTest;
 import com.microf.model.Address;
 import com.microf.model.UKAddress;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ServerConfigurationIntegrationTest.class})
+@ContextConfiguration(classes = {ServerCommonConfigurationTest.class, ServerConfigurationIntegrationTest.class})
 public class UKAddressServiceIntegrationTest {
 
     private final Logger log = LoggerFactory.getLogger(UKAddressServiceIntegrationTest.class);

@@ -1,6 +1,7 @@
 package com.microf.backend.controller;
 
 import com.hazelcast.core.HazelcastInstance;
+import com.microf.backend.ServerCommonConfigurationTest;
 import com.microf.backend.ServerConfigurationTest;
 import com.microf.backend.service.IAddressService;
 import com.microf.backend.service.UKAddressServiceImpl;
@@ -17,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = { ServerConfigurationTest.class })
+@ContextConfiguration(classes = {ServerCommonConfigurationTest.class, ServerConfigurationTest.class })
 public class UKAddressControllerTest {
 
     private final Logger log = LoggerFactory.getLogger(UKAddressControllerTest.class);

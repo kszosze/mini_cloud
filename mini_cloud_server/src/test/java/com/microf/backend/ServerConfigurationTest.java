@@ -1,8 +1,10 @@
 package com.microf.backend;
 
+import com.hazelcast.config.Config;
 import com.hazelcast.core.HazelcastInstance;
 import com.microf.backend.util.HazelcastFactoryMock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,11 +16,6 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @ComponentScan(value = {"com.microf.backend.service", "com.microf.backend.controller"})
 public class ServerConfigurationTest {
-
-    @Bean
-    public HazelcastInstance getHazelcastInstance() {
-        return new HazelcastFactoryMock().getHazelcastInstance();
-    }
 
     @Bean
     public RestTemplate getRestTemplate() {
