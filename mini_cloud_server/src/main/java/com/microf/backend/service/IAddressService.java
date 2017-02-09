@@ -1,7 +1,7 @@
 package com.microf.backend.service;
 
-import com.microf.model.Address;
-import com.microf.model.Position;
+import com.microf.backend.model.Address;
+import com.microf.backend.model.Position;
 
 import java.util.List;
 

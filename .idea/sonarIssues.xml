@@ -13,6 +13,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/mini_cloud_api-gateway/build.gradle">
           <value>
             <set />
@@ -58,7 +63,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/mini_cloud_model/src/main/java/com/microf/backend/model/Address.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/mini_cloud_model/src/main/java/com/microf/backend/model/IEAddress.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/mini_cloud_model/src/main/java/com/microf/backend/model/Position.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/mini_cloud_model/src/main/java/com/microf/backend/model/UKAddress.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/mini_cloud_model/src/main/java/com/microf/model/IEAddress.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/mini_cloud_model/src/main/java/com/microf/model/Position.java">
           <value>
             <set />
           </value>
@@ -99,6 +129,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/mini_cloud_server/src/main/java/com/microf/backend/controller/UKAddressController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/mini_cloud_server/src/main/java/com/microf/backend/service/IAddressService.java">
           <value>
             <set />
           </value>
@@ -153,12 +188,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/mini_cloud_server/src/test/java/com/microf/backend/service/IEAddressServiceIntegrationTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/mini_cloud_server/src/test/java/com/microf/backend/service/IEAddressServiceTest.java">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/mini_cloud_server/src/test/java/com/microf/backend/service/UKAddressServiceImplTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/mini_cloud_server/src/test/java/com/microf/backend/service/UKAddressServiceIntegrationTest.java">
           <value>
             <set />
           </value>

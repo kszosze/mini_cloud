@@ -6,7 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {ServerConfigurationTest.class})
+@ContextConfiguration(classes = {ServerCommonConfigurationTest.class, ServerConfigurationTest.class})
 public class ServerApplicationTests {
 
 	@Test
