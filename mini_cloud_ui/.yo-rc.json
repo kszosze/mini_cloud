@@ -1,0 +1,51 @@
+{
+  "generator-jhipster": {
+    "jhipsterVersion": "4.0.0",
+    "baseName": "queryForAddress",
+    "packageName": "org.microf",
+    "packageFolder": "org/microf",
+    "serverPort": "9090",
+    "authenticationType": "jwt",
+    "hibernateCache": "no",
+    "clusteredHttpSession": "hazelcast",
+    "websocket": "spring-websocket",
+    "databaseType": "cassandra",
+    "devDatabaseType": "cassandra",
+    "prodDatabaseType": "cassandra",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "gradle",
+    "enableSocialSignIn": false,
+    "jwtSecretKey": "12c9f7c57bd3b42186abfded286632baa7d7bc56",
+    "useSass": false,
+    "clientPackageManager": "yarn",
+    "applicationType": "gateway",
+    "clientFramework": "angular2",
+    "testFrameworks": [
+      "gatling"
+    ],
+    "jhiPrefix": "jhi",
+    "otherModules": [
+      {
+        "name": "generator-jhipster-webservice",
+        "version": "0.1.0"
+      },
+      {
+        "name": "generator-jhipster-swagger-cli",
+        "version": "2.0.5"
+      },
+      {
+        "name": "generator-jhipster-material",
+        "version": "0.0.0"
+      }
+    ],
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": [
+      "en",
+      "gl",
+      "es"
+    ]
+  }
+}
