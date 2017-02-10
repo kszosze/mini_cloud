@@ -14,8 +14,8 @@ task buildDocker(type: Exec) {
         }
     }
     if (OperatingSystem.current().isWindows()) {
-        commandLine 'cmd', '/c', 'docker', 'build', '-f', 'build/docker/Dockerfile', '-t', 'mini_cloud_ui', 'build/docker/'
+        commandLine 'cmd', '/c', 'docker', 'build', '-f', 'build/docker/Dockerfile', '-t', 'queryforaddress', 'build/docker/'
     } else {
-        commandLine 'docker', 'build', '-f', 'build/docker/Dockerfile', '-t', 'mini_cloud_ui', 'build/docker/'
+        commandLine 'docker', 'build', '-f', 'build/docker/Dockerfile', '-t', 'queryforaddress', 'build/docker/'
     }
 }

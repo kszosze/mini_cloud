@@ -1,9 +1,16 @@
 package com.microf.backend.controller;
 
-import org.junit.Test; 
+import com.microf.backend.ServerCommonConfigurationTest;
+import com.microf.backend.ServerConfigurationTest;
+import org.junit.Test;
 import org.junit.Before; 
-import org.junit.After; 
+import org.junit.After;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = {ServerCommonConfigurationTest.class, ServerConfigurationTest.class })
 public class IEAddressControllerTest { 
 
 @Before

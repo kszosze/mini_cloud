@@ -6,3 +6,13 @@ spring:
       server:
         git:
           uri:  https://github.com/kszosze/mini_cloud_config
+
+server:
+  port: 8888
+shell:
+  ssh:
+    port: 2020
+logging:
+  level:
+    org.eclipse.jgit: DEBUG
+    com.jcraft: DEBUG

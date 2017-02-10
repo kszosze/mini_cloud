@@ -1,7 +1,7 @@
 package com.microf.backend.controller;
 
 import com.microf.backend.service.IAddressService;
-import com.microf.model.Address;
+import com.microf.backend.model.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;

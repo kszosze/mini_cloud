@@ -1,8 +1,8 @@
 package com.microf.backend.controller;
 
 import com.microf.backend.service.IAddressService;
-import com.microf.model.Address;
-import com.microf.model.Position;
+import com.microf.backend.model.Address;
+import com.microf.backend.model.Position;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,7 +33,7 @@ public class IEAddressController {
 
 	@RequestMapping("/addressgeo/{ierCode}")
 	public List<Address> getAddressAndGeoByCode(@PathVariable("ierCode") String ierCode,
-												@RequestParam("addtags") String addTags) {
+												@RequestParam(value = "addtags", defaultValue = "") String addTags) {
 	    final List<Address> listAddress = new ArrayList<>();
 	    if (StringUtils.isEmpty(addTags)) {
             listAddress.addAll(addressService.getAddressGeoByCode(ierCode));
